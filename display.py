@@ -34,7 +34,7 @@ class HeadUpDisplay:
         self.show_animations = self.preferences.prefs['show_animations']
         self.widgets = [
             HeadUpStatusBar('status_bar', self.preferences, self.theme),
-            HeadUpEventLog('event_log', self.preferences, self.theme),
+#            HeadUpEventLog('event_log', self.preferences, self.theme),
         ]
         if (self.preferences.prefs['enabled']):
             self.enable()

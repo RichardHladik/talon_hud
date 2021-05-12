@@ -57,6 +57,7 @@ class HeadUpDisplayUserPreferences:
             value = split_line[1]
             if key in self.default_prefs:
                 if (key in self.boolean_keys):
+                    print(key, value)
                     preferences[key] = True if int(value) > 0 else False
                 elif key in self.integer_keys:
                     preferences[key] = int(value)

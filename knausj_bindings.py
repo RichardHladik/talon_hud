@@ -55,6 +55,12 @@ class KnausjStatePoller:
                 mode = 'sleep'
             if ('dictation' in active_modes):
                 mode = 'dictation'
+            if ('user.czech' in active_modes):
+                mode = 'czech'
+            if ('user.german' in active_modes):
+                mode = 'german'
+            if ('user.intermediate' in active_modes):
+                mode = 'intermediate'
         
         return mode
     
@@ -81,6 +87,7 @@ class KnausjStatePoller:
         "javascript": ".js",
         "typescript": ".ts",
         "r": ".r",
+        "tex": ".tex",
     }
     
     # Determine the forced or assumed language

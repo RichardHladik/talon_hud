@@ -2,11 +2,17 @@ background_colour,CCCCCC
 sleep_blink_colour,111111
 command_blink_colour,26526F
 dictation_blink_colour,F49609
+german_blink_colour,000000
+czech_blink_colour,0B69F6
+intermediate_blink_colour,CCCCCC
 top_stroke_colour,DDDDDD
 down_stroke_colour,999999
 sleep_mode_colour,777777
 command_mode_colour,FFFFFF
 dictation_mode_colour,FFFFFF
+german_mode_colour,FFFFFF
+czech_mode_colour,FFFFFF
+intermediate_mode_colour,FFFFFF
 button_colour,FFFFFF
 button_hover_colour,CCCCCC
 close_icon_accent_colour,FF0000

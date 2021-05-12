@@ -3,6 +3,14 @@ from talon import skia, ui, Module, cron, actions
 import time
 import numpy
 
+def get_by_mode(mode):
+    return {
+        "dictation": "Dictate",
+        "czech": "Czech",
+        "german": "German",
+        "intermediate": "",
+    }.get(mode, "???")
+
 class HeadUpStatusBar(BaseWidget):
 
     # Difference array for colour transitions in animations
@@ -32,6 +40,12 @@ class HeadUpStatusBar(BaseWidget):
                 self.blink_colour = self.command_blink_colour
             elif (new_content["mode"] == 'dictation'):
                 self.blink_colour = self.dictation_blink_colour
+            elif (new_content["mode"] == 'czech'):
+                self.blink_colour = self.czech_blink_colour
+            elif (new_content["mode"] == 'german'):
+                self.blink_colour = self.german_blink_colour
+            elif (new_content["mode"] == 'intermediate'):
+                self.blink_colour = self.intermediate_blink_colour
             elif (new_content["mode"] == 'sleep'):
                 self.blink_colour = self.sleep_blink_colour                
             
@@ -82,6 +96,9 @@ class HeadUpStatusBar(BaseWidget):
         self.command_blink_colour = self.theme.get_colour_as_ints('command_blink_colour')
         self.sleep_blink_colour = self.theme.get_colour_as_ints('sleep_blink_colour')
         self.dictation_blink_colour = self.theme.get_colour_as_ints('dictation_blink_colour')
+        self.german_blink_colour = self.theme.get_colour_as_ints('german_blink_colour')
+        self.czech_blink_colour = self.theme.get_colour_as_ints('czech_blink_colour')
+        self.intermediate_blink_colour = self.theme.get_colour_as_ints('intermediate_blink_colour')
         self.background_colour = self.theme.get_colour_as_ints('background_colour')
         self.intro_animation_start_colour = self.theme.get_colour_as_ints('intro_animation_start_colour')
         self.intro_animation_end_colour = self.theme.get_colour_as_ints('intro_animation_end_colour')
@@ -144,15 +161,15 @@ class HeadUpStatusBar(BaseWidget):
 
         # Draw selected language
         # TODO - FAKE BOLD until I find out how to properly use font style
-        if ((self.content["mode"] == "command" and self.content["language"]["ext"] is not None) or self.content["mode"] == "dictation"):
+        if ((self.content["mode"] == "command" and self.content["language"]["ext"] is not None) or self.content["mode"] in ["dictation", "czech", "german", "intermediate"]):
             text_colour =  self.theme.get_colour('text_forced_colour') if self.content["language"]["forced"] else self.theme.get_colour('text_colour')
             paint.shader = skia.Shader.linear_gradient(self.x, self.y, self.x, self.y + element_height, (text_colour, text_colour), None)
             paint.style = paint.Style.STROKE
             paint.textsize = 24
             text_x = self.x + circle_margin * 2 + ( len(self.icons) * ( icon_diameter + circle_margin ) )
-            canvas.draw_text(self.content["language"]["ext"] if self.content["mode"] == "command" else "Dictate", text_x , height_center - circle_margin + paint.textsize / 2)
+            canvas.draw_text(self.content["language"]["ext"] if self.content["mode"] == "command" else get_by_mode(self.content["mode"]), text_x , height_center - circle_margin + paint.textsize / 2)
             paint.style = paint.Style.FILL
-            canvas.draw_text(self.content["language"]["ext"] if self.content["mode"] == "command" else "Dictate", text_x, height_center - circle_margin + paint.textsize / 2)
+            canvas.draw_text(self.content["language"]["ext"] if self.content["mode"] == "command" else get_by_mode(self.content["mode"]), text_x, height_center - circle_margin + paint.textsize / 2)
 
         # Draw closing icon
         paint.style = paint.Style.FILL
